@@ -1,15 +1,19 @@
 [submodule "spike"]
 	path = spike
-	url = https://github.com/THU-DSP-LAB/ventus-gpgpu-isa-simulator.git
+	url = https://github.com/whyuwhyi/ventus-spike
+	branch = whywhy
 [submodule "gpgpu"]
 	path = gpgpu
-	url = https://github.com/THU-DSP-LAB/ventus-gpgpu.git
+	url = https://github.com/whyuwhyi/ventus-gpgpu
+	branch = whywhy
 [submodule "driver"]
 	path = driver
-	url = https://github.com/THU-DSP-LAB/ventus-driver.git
+	url = https://github.com/whyuwhyi/ventus-driver
+	branch = whywhy
 [submodule "pocl"]
 	path = pocl
-	url = https://github.com/THU-DSP-LAB/pocl.git
+	url = https://github.com/whyuwhyi/ventus-pocl
+	branch = whywhy
 [submodule "ocl-icd"]
 	path = ocl-icd
 	url = https://github.com/OCL-dev/ocl-icd.git
@@ -18,7 +22,8 @@
 	url = https://github.com/THU-DSP-LAB/gpu-rodinia.git
 [submodule "llvm"]
 	path = llvm
-	url = https://github.com/THU-DSP-LAB/llvm-project.git
+	url = https://github.com/whyuwhyi/ventus-llvm
+	branch = whywhy
 [submodule "systemc"]
 	path = systemc
 	url = https://github.com/accellera-official/systemc.git
@@ -31,3 +36,7 @@
 [submodule "testcases"]
 	path = testcases
 	url = https://github.com/THU-DSP-LAB/Ventus-OpenCL-Testcase.git
+[submodule "ventus-pytorch"]
+	path = ventus-pytorch
+	url = https://github.com/THU-DSP-LAB/ventus-pytorch
+	branch = ventus

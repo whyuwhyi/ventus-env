@@ -1,0 +1,10 @@
+
+mma.o:	file format elf32-littleriscv
+
+Disassembly of section .text:
+
+00000000 <bench_mma>:
+       0: 0a 34 c2 00  	mma.m8n8k16.row.row.f32.f16.f16.f32	v8, v4, v12
+       4: 8a 84 d2 02  	mma.m16n8k16.row.col.f16.f16.f16.f16	v9, v5, v13
+       8: 0a 55 e3 16  	mma.m16n16k16.col.col.f32.bf16.bf16.f32	v10, v6, v14
+       c: 67 80 00 00  	ret

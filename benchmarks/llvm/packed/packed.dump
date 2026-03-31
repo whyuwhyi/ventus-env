@@ -1,0 +1,13 @@
+
+packed.o:	file format elf32-littleriscv
+
+Disassembly of section .text:
+
+00000000 <bench_packed>:
+       0: 5a 04 c2 02  	<unknown>
+       4: da 84 d2 06  	<unknown>
+       8: 5a 05 e3 0a  	<unknown>
+       c: da 95 f3 02  	<unknown>
+      10: 5a 16 04 07  	<unknown>
+      14: da 96 14 0b  	<unknown>
+      18: 67 80 00 00  	ret

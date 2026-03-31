@@ -1,0 +1,31 @@
+
+sfu.o:	file format elf32-littleriscv
+
+Disassembly of section .text:
+
+00000000 <bench_sfu>:
+       0: 2a 04 40 02  	<unknown>
+       4: aa 04 50 06  	<unknown>
+       8: 2a 05 60 0a  	<unknown>
+       c: aa 05 70 0e  	<unknown>
+      10: 2a 06 80 12  	<unknown>
+      14: aa 06 90 16  	<unknown>
+      18: 2a 07 a0 1a  	<unknown>
+      1c: aa 07 b0 1e  	<unknown>
+      20: 2a 08 c0 22  	<unknown>
+      24: aa 08 d0 26  	<unknown>
+      28: 2a 19 e0 02  	<unknown>
+      2c: aa 19 f0 0a  	<unknown>
+      30: 2a 1a 00 0f  	<unknown>
+      34: aa 1a 10 13  	<unknown>
+      38: 2a 1b 20 1f  	<unknown>
+      3c: aa 1b 30 23  	<unknown>
+      40: 2a 1c 40 27  	<unknown>
+      44: aa 2c 50 03  	<unknown>
+      48: 2a 2d 60 0b  	<unknown>
+      4c: aa 2d 70 0f  	<unknown>
+      50: 2a 2e 80 13  	<unknown>
+      54: aa 2e 90 1f  	<unknown>
+      58: 2a 2f a0 23  	<unknown>
+      5c: aa 2f b0 27  	<unknown>
+      60: 67 80 00 00  	ret

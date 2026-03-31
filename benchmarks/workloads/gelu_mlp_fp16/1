@@ -1,0 +1,424 @@
+### options: -DPOCL_DEVICE_ADDRESS_BITS=32 -D__USE_CLANG_OPENCL_C_H -xcl -Dinline= -I. -cl-kernel-arg-info  -D__ENDIAN_LITTLE__=1 -DCL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE=0 -D__OPENCL_VERSION__=200 -cl-std=CL2.0 -D__OPENCL_C_VERSION__=200 -Dcl_khr_fp64=1 -D__opencl_c_generic_address_space=1 -D__opencl_c_named_address_space_builtins=1 -cl-ext=-all,+cl_khr_fp64,+__opencl_c_generic_address_space,+__opencl_c_named_address_space_builtins -fno-builtin -triple=riscv32 -target-cpu ventus-gpgpu user_options: 
+### options: -DPOCL_DEVICE_ADDRESS_BITS=32 -D__USE_CLANG_OPENCL_C_H -xcl -Dinline= -I. -cl-kernel-arg-info  -D__ENDIAN_LITTLE__=1 -DCL_DEVICE_MAX_GLOBAL_VARIABLE_SIZE=0 -D__OPENCL_VERSION__=200 -cl-std=CL2.0 -D__OPENCL_C_VERSION__=200 -Dcl_khr_fp64=1 -D__opencl_c_generic_address_space=1 -D__opencl_c_named_address_space_builtins=1 -cl-ext=-all,+cl_khr_fp64,+__opencl_c_generic_address_space,+__opencl_c_named_address_space_builtins -fno-builtin -triple=riscv32 -target-cpu ventus-gpgpu user_options: 
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=38 numOps=0
+[Select] i32 node opc=38 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=255 numOps=3
+[Select] i32 node opc=255 numOps=3 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=38 numOps=0
+[Select] i32 node opc=38 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=426 numOps=1
+[Select] i32 node opc=426 numOps=1 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=15 numOps=0
+[Select] i32 node opc=15 numOps=0 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=175 numOps=2
+[Select] i32 node opc=175 numOps=2 isMachine=0
+[Select] opc=49 numOps=3
+[Select] i32 node opc=49 numOps=3 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=36 numOps=0
+[Select] i32 node opc=36 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=426 numOps=1
+[Select] i32 node opc=426 numOps=1 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=15 numOps=0
+[Select] i32 node opc=15 numOps=0 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=55 numOps=2
+[Select] i32 node opc=55 numOps=2 isMachine=0
+[Select] opc=175 numOps=2
+[Select] i32 node opc=175 numOps=2 isMachine=0
+[Select] opc=49 numOps=3
+[Select] i32 node opc=49 numOps=3 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=49 numOps=2
+[Select] i32 node opc=49 numOps=2 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=36 numOps=0
+[Select] i32 node opc=36 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+0
+[Select] opc=11 numOps=0
+[Select] opc=426 numOps=1
+[Select] i32 node opc=426 numOps=1 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=[Select] opc=426 numOps=1
+[Select] i32 node opc=426 numOps=1 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=40 numOps=0
+[Select] i32 node opc=40 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=34 numOps=0
+[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=[Select] i32 node opc=34 numOps=0 isMachine=0
+[Select] opc=9 numOps=0
+[Select] i32 node opc=9 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+9 numOps=0 isMachine=0
+[Select] opc=11 numOps=0
+clang-16: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:5813: llvm::SDValue lowerVectorIntrinsicScalars(llvm::SDValue, llvm::SelectionDAG&, const llvm::RISCVSubtarget&): Assertion `0 && "TODO!"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace, preprocessed source, and associated run script.
+Stack dump:
+0.	Program arguments: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin/clang-16 -cc1 -triple riscv32 -emit-obj --mrelax-relocations -disable-free -clear-ast-before-backend -main-file-name object0.cl -mrelocation-model static -mframe-pointer=none -fmath-errnclang-16: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:5813: llvm::SDValue lowerVectorIntrinsicScalars(llvm::SDValue, llvm::SelectionDAG&, const llvm::RISCVSubtarget&): Assertion `0 && "TODO!"' failed.
+PLEASE submit a bug report to https://github.com/llvm/llvm-project/issues/ and include the crash backtrace, preprocessed source, and associated run script.
+Stack dump:
+0.	Program arguments: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin/clang-16 -cc1 -triple riscv32 -emit-obj --mrelax-relocations -disable-free -clear-ast-before-backend -main-file-name object0.cl -mrelocation-model static -mframe-pointer=none -fmath-errno -ffp-contract=on -fno-rounding-math -fno-verbose-asm -mconstructor-aliases -nostdso -ffp-contract=on -fno-rounding-math -fno-verbose-asm -mconstructor-aliases -nostdsysteminc -targetysteminc -target-cpu ventus-gp-cpu ventus-gpgpu -target-feature +m -target-feature +a -target-feature +zfinx -target-feature +zdinx -target-featgpu -target-feature +m -target-feature +a -target-feature +zfinx -target-feature +zdinx -target-feature +zve32f -ure +zve32f -target-featuretarget-feature +zve32x -targ +zve32x -target-feature +zet-feature +zvl32b -targetvl32b -target-feature +zhi-feature +zhinx -target-fenx -target-feature -64bit ature -64bit -target-featu-target-feature +relax -tare +relax -target-feature rget-feature -save-restore-save-restore -target-abi  -target-abi ilp32 -fno-oilp32 -fno-optimize-sibliptimize-sibling-calls -Wno-ng-calls -Wno-macro-redefinemacro-redefined -msmall-data-limit 8 -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -fcoveraged -msmall-data-limit 8 -mllvm -treat-scalable-fixed-error-as-warning -debugger-tuning=gdb -fcoverage-compilation-di-compilation-dir=/home/whywhr=/home/whywhy/cs/gpgpu-aiy/cs/gpgpu-ai-accelerator-accelerator/experiments//experiments/ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16 -ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16 -resource-dirresource-dir /home/whywh /home/whywhy/cs/gpgpu-aiy/cs/gpgpu-ai-accelerator/-accelerator/experiments/vexperiments/ventus-env-expentus-env-experiments/insteriments/install/lib/clang/1all/lib/clang/16 -I /home/w6 -I /home/whywhy/cs/gpgphywhy/cs/gpgpu-ai-accelerau-ai-accelerator/experimentor/experiments/ventus-envts/ventus-env-experiments/-experiments/installincludinstallinclude/clc -D __oe/clc -D __opencl_c_generpencl_c_generic_address_space=1ic_address_space=1 -D __opencl_ -D __opencl_c_named_addrc_named_address_space_buiess_space_builtins=1 -D _ltins=1 -D __OPENCL_VERSI_OPENCL_VERSION__=200 -intON__=200 -internal-isystemernal-isystem /home/whywh /home/whywhy/cs/gpgpu-aiy/cs/gpgpu-ai-accelerator/-accelerator/experiments/vexperiments/ventus-env-expentus-env-experiments/insteriments/install/lib/clangall/lib/clang/16/include -/16/include -internal-isysinternal-isystem /home/tem /home/whywhy/cs/gpgwhywhy/cs/gpgpu-ai-accelerpu-ai-accelerator/experimeator/experiments/ventus-ennts/ventus-env-experimentsv-experiments/install/bin//install/bin/../lib/clang-../lib/clang-runtimes/riscruntimes/riscv32/include -v32/include -O1 -w -fdebuO1 -w -fdebug-compilationg-compilation-dir=/home/wh-dir=/home/whywhy/cs/gpgpuywhy/cs/gpgpu-ai-accelerat-ai-accelerator/experimenor/experiments/ventus-envts/ventus-env-experiments/-experiments/benchmarks/wobenchmarks/workloads/gelu_rkloads/gelu_mlp_fp16 -femlp_fp16 -ferror-limit 19rror-limit 19 -cl-std=CL2. -cl-std=CL2.0 -finclude-d0 -finclude-default-headerefault-header -fgnuc-versi -fgnuc-version=4.2.1 -fnoon=4.2.1 -fno-threadsafe-s-threadsafe-statics -faddrtatics -faddrsig -o /homesig -o /home/whywhy/cs/gp/whywhy/cs/gpgpu-ai-accelegpu-ai-accelerator/experimrator/experiments/ventus-eents/ventus-env-experimentnv-experiments/benchmarks/s/benchmarks/workloads/gelworkloads/gelu_mlp_fp16/.tu_mlp_fp16/.tmp/object0-bcmp/object0-bc0185.o -x cl 0185.o -x cl object0.cl
+object0.cl
+1.	1.	<eof> parser at end of file
+2.	Code generation
+3.	Running pass 'Function Pass Manager' on module 'object0.cl'.
+4.	Running pass 'RISCV DAG->DAG Pattern Instruction Selection' on function '<eof> parser at end of file
+2.	Code generation
+3.	Running pass 'Function Pass Manager' on module 'object0.cl'.
+4.	Running pass 'RISCV DAG->DAG Pattern Instruction Selection' on function '@@gelu_mlp_fp16gelu_mlp_fp16'
+'
+ #0 0x00007f09f3be729d llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Unix/Signals.inc:571:3
+ #1 0x00007f09f3be52c4 llvm::sys::RunSignalHandlers() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Signals.cpp:104:20
+ #2 0x00007f09f3be543a SignalHandler(int) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Unix/Signals.inc:402:31
+ #3 0x00007f09f344d2d0 (/usr/lib/libc.so.6+0x3e2d0)
+ #4 0x00007f09f34a7a2c (/usr/lib/libc.so.6+0x98a2c)
+ #5 0x00007f09f344d1a0 raise (/usr/lib/libc.so.6+0x3e1a0)
+ #6 0x00007f09f34345fe abort (/usr/lib/libc.so.6+0x255fe)
+ #7 0x00007f09f3435697 (/usr/lib/libc.so.6+0x26697)
+ #8 0x00007f09f34450b2 __assert_fail (/usr/lib/libc.so.6+0x360b2)
+ #9 0x00007f09f9c89ed6 llvm::TargetLoweringBase::isTypeLegal(llvm::EVT) const (.isra.0.cold) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/TargetLowering.h:939:8
+#10 0x00007f09f9c8b4ca llvm::isa_impl_cl<llvm::ConstantSDNode, llvm::SDNode const*>::doit(llvm::SDNode const*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:6091:37
+#11 0x00007f09f9c8b4ca llvm::isa_impl_wrap<llvm::ConstantSDNode, llvm::SDNode const*, llvm::SDNode const*>::doit(llvm::SDNode const* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:137:41
+#12 0x00007f09f9c8b4ca llvm::isa_impl_wrap<llvm::ConstantSDNode, llvm::SDNode* const, llvm::SDNode const*>::doit(llvm::SDNode* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:129:13
+#13 0x00007f09f9c8b4ca llvm::CastIsPossible<llvm::ConstantSDNode, llvm::SDNode*, void>::isPossible(llvm::SDNode* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:257:62
+#14 0x00007f09f9c8b4ca llvm::CastInfo<llvm::ConstantSDNode, llvm::SDValue const, void>::isPossible(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:510:38
+#15 0x00007f09f9c8b4ca bool llvm::isa<llvm::ConstantSDNode, llvm::SDValue>(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:549:46
+#16 0x00007f09f9c8b4ca decltype(auto) llvm::cast<llvm::ConstantSDNode, llvm::SDValue>(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:566:3
+#17 0x00007f09f9c8b4ca llvm::SDNode::getConstantOperandVal(unsigned int) const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/SelectionDAGNodes.h:1624:61
+#18 0x00007f09f9c8b4ca llvm::SDValue::getConstantOperandVal(unsigned int) const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/SelectionDAGNodes.h:1154:37
+#19 0x00007f09f9c8b4ca llvm::RISCVTargetLowering::LowerINTRINSIC_WO_CHAIN(llvm::SDValue, llvm::SelectionDAG&) const (.cold) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:6000:44
+#20 0x00007f09f2d59a56 (anonymous namespace)::SelectionDAGLegalize::LegalizeOp(llvm::SDNode*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/LegalizeDAG.cpp:1297:43
+#21 0x00007f09f2d5ad7f llvm::SelectionDAG::Legalize() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/LegalizeDAG.cpp:5105:28
+#22 0x00007f09f2f06688 llvm::TimeRegion::~TimeRegion() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Timer.h:157:9
+#23 0x00007f09f2f06688 llvm::NamedRegionTimer::~NamedRegionTimer() /home/whywh #0 0x00007f09f3be729d llvm::sys::PrintStackTrace(llvm::raw_ostream&, int) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Unix/Signals.inc:571:3
+ #1 0x00007f09f3be52c4 llvm::sys::RunSignalHandlers() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Signals.cpp:104:20
+ #2 0x00007f09f3be543a SignalHandler(int) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Support/Unix/Signals.inc:402:31
+ #3 0x00007f09f344d2d0 (/usr/lib/libc.so.6+0x3e2d0)
+ #4 0x00007f09f34a7a2c (/usr/lib/libc.so.6+0x98a2c)
+ #5 0x00007f09f344d1a0 raise (/usr/lib/libc.so.6+0x3e1a0)
+ #6 0x00007f09f34345fe abort (/usr/lib/libc.so.6+0x255fe)
+ #7 0x00007f09f3435697 (/usr/lib/libc.so.6+0x26697)
+ #8 0x00007f09f34450b2 __assert_fail (/usr/lib/libc.so.6+0x360b2)
+ #9 0x00007f09f9c89ed6 llvm::TargetLoweringBase::isTypeLegal(llvm::EVT) const (.isra.0.cold) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/TargetLowering.h:939:8
+#10 0x00007f09f9c8b4ca llvm::isa_impl_cl<llvm::ConstantSDNode, llvm::SDNode const*>::doit(llvm::SDNode const*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:6091:37
+#11 0x00007f09f9c8b4ca llvm::isa_impl_wrap<llvm::ConstantSDNode, llvm::SDNode const*, llvm::SDNode const*>::doit(llvm::SDNode const* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:137:41
+#12 0x00007f09f9c8b4ca llvm::isa_impl_wrap<llvm::ConstantSDNode, llvm::SDNode* const, llvm::SDNode const*>::doit(llvm::SDNode* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:129:13
+#13 0x00007f09f9c8b4ca llvm::CastIsPossible<llvm::ConstantSDNode, llvm::SDNode*, void>::isPossible(llvm::SDNode* const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:257:62
+#14 0x00007f09f9c8b4ca llvm::CastInfo<llvm::ConstantSDNode, llvm::SDValue const, void>::isPossible(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:510:38
+#15 0x00007f09f9c8b4ca bool llvm::isa<llvm::ConstantSDNode, llvm::SDValue>(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:549:46
+#16 0x00007f09f9c8b4ca decltype(auto) llvm::cast<llvm::ConstantSDNode, llvm::SDValue>(llvm::SDValue const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Casting.h:566:3
+#17 0x00007f09f9c8b4ca llvm::SDNode::getConstantOperandVal(unsigned int) const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/SelectionDAGNodes.h:1624:61
+#18 0x00007f09f9c8b4ca llvm::SDValue::getConstantOperandVal(unsigned int) const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/CodeGen/SelectionDAGNodes.h:1154:37
+#19 0x00007f09f9c8b4ca llvm::RISCVTargetLowering::LowerINTRINSIC_WO_CHAIN(llvm::SDValue, llvm::SelectionDAG&) const (.cold) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/Target/RISCV/RISCVISelLowering.cpp:6000:44
+#20 0x00007f09f2d59a56 (anonymous namespace)::SelectionDAGLegalize::LegalizeOp(llvm::SDNode*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/LegalizeDAG.cpp:1297:43
+#21 0x00007f09f2d5ad7f llvm::SelectionDAG::Legalize() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/LegalizeDAG.cpp:5105:28
+#22 0x00007f09f2f06688 llvm::TimeRegion::~TimeRegion() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Timer.h:157:9
+#23 0x00007f09f2f06688 llvm::NamedRegionTimer::~NamedRegionTimer() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Timer.h:165:8
+#24 0x00007f09f2f06688 llvm::SelectionDAGISel::CodeGenAndEmitDAG() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:893:3
+#25 0x00007f09f2f0a1b8 llvm::SelectionDAGISel::SelectAllBasicBlocks(llvm::Function const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:1604:33
+#26 0x00007f09f2f0c4cc llvm::SelectionDAGISel::runOnMachineFunction(llvm::MachineFunction&) (.part.0) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:469:22
+#27 0x00007f09f773833e llvm::MachineFunctionPass::runOnFunction(llvm::Function&) (.part.0) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/MachineFunctionPass.cpp:91:33
+#28 0x00007f09f4a4ec0c llvm::FPPassManager::runOnFunction(llvm::Function&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1430:40
+#29 0x00007f09f4a4ee15 llvm::ilist_node_base<true>::getNext() const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_node_base.h:43:45
+#30 0x00007f09f4a4ee15 llvm::ilist_node_impl<llvm::ilist_detail::node_options<llvm::Function, true, false, void>>::getNext() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_node.h:67:66
+#31 0x00007f09f4a4ee15 llvm::ilist_iterator<llvm::ilist_detail::node_options<llvm::Function, true, false, void>, false, false>::operator++() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_iterator.h:157:25
+#32 0x00007f09f4a4ee15 llvm::FPPassManager::runOnModule(llvm::Module&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1475:22
+#33 0x00007f09f4a4f6a7 runOnModule /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1545:38
+#34 0x00007f09f4a4f6a7 llvm::legacy::PassManagerImpl::run(llvm::Module&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:535:55
+#35 0x00007f09f7f40958 llvm::TimeTraceScope::~TimeTraceScope() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/TimeProfiler.h:155:37
+#36 0x00007f09f7f40958 RunCodegenPipeline /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1095:3
+#37 0x00007f09f7f40958 EmitAssembly /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1116:21
+#38 0x00007f09f7f40958 clang::EmitBackendOutput(clang::DiagnosticsEngine&, clang::HeaderSearchOptions const&, clang::CodeGenOptions const&, clang::TargetOptions const&, clang::LangOptions const&, llvm::StringRef, llvm::Module*, clang::BackendAction, std::unique_ptr<llvm::raw_pwrite_stream, std::default_delete<llvm::raw_pwrite_stream>>) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1274:25
+#39 0x00007f09f8349b10 std::unique_ptr<llvm::raw_pwrite_stream, std::default_delete<llvm::raw_pwrite_stream>>::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:397:12
+#40 0x00007f09f8349b10 clang::BackendConsumer::HandleTranslationUnit(clang::ASTContext&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/CodeGenAction.cpp:381:24
+#41 0x00007f09f191b479 clang::ParseAST(clang::Sema&, bool, bool) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Parse/ParseAST.cpp:196:34
+#42 0x00007f09f690f1f9 clang::FrontendAction::Execute() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Frontend/Frontey/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Timer.h:165:8
+#24 0x00007f09f2f06688 llvm::SelectionDAGISel::CodeGenAndEmitDAG() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:893:3
+#25 0x00007f09f2f0a1b8 llvm::SelectionDAGISel::SelectAllBasicBlocks(llvm::Function const&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:1604:33
+#26 0x00007f09f2f0c4cc llvm::SelectionDAGISel::runOnMachineFunction(llvm::MachineFunction&) (.part.0) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/SelectionDAG/SelectionDAGISel.cpp:469:22
+#27 0x00007f09f773833e llvm::MachineFunctionPass::runOnFunction(llvm::Function&) (.part.0) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/CodeGen/MachineFunctionPass.cpp:91:33
+#28 0x00007f09f4a4ec0c llvm::FPPassManager::runOnFunction(llvm::Function&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1430:40
+#29 0x00007f09f4a4ee15 llvm::ilist_node_base<true>::getNext() const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_node_base.h:43:45
+#30 0x00007f09f4a4ee15 llvm::ilist_node_impl<llvm::ilist_detail::node_options<llvm::Function, true, false, void>>::getNext() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_node.h:67:66
+#31 0x00007f09f4a4ee15 llvm::ilist_iterator<llvm::ilist_detail::node_options<llvm::Function, true, false, void>, false, false>::operator++() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/ADT/ilist_iterator.h:157:25
+#32 0x00007f09f4a4ee15 llvm::FPPassManager::runOnModule(llvm::Module&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1475:22
+#33 0x00007f09f4a4f6a7 runOnModule /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:1545:38
+#34 0x00007f09f4a4f6a7 llvm::legacy::PassManagerImpl::run(llvm::Module&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/lib/IR/LegacyPassManager.cpp:535:55
+#35 0x00007f09f7f40958 llvm::TimeTraceScope::~TimeTraceScope() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/TimeProfiler.h:155:37
+#36 0x00007f09f7f40958 RunCodegenPipeline /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1095:3
+#37 0x00007f09f7f40958 EmitAssembly /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1116:21
+#38 0x00007f09f7f40958 clang::EmitBackendOutput(clang::DiagnosticsEngine&, clang::HeaderSearchOptions const&, clang::CodeGenOptions const&, clang::TargetOptions const&, clang::LangOptions const&, llvm::StringRef, llvm::Module*, clang::BackendAction, std::unique_ptr<llvm::raw_pwrite_stream, std::default_delete<llvm::raw_pwrite_stream>>) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/BackendUtil.cpp:1274:25
+#39 0x00007f09f8349b10 std::unique_ptr<llvm::raw_pwrite_stream, std::default_delete<llvm::raw_pwrite_stream>>::~unique_ptr() /usr/include/c++/15.2.1/bits/unique_ptr.h:397:12
+#40 0x00007f09f8349b10 clang::BackendConsumer::HandleTranslationUnit(clang::ASTContext&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/CodeGen/CodeGenAction.cpp:381:24
+#41 0x00007f09f191b479 clang::ParseAST(clang::Sema&, bool, bool) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Parse/ParseAST.cpp:196:34
+#42 0x00007f09f690f1f9 clang::FrontendAction::Execute() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Frontend/FrontendAction.cpp:1055:21
+#43 0x00007f09f6897527 llvm::Error::getPtr() const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Error.h:271:51
+#44 0x00007f09f6897527 llvm::Error::operator bool() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Error.h:234:22
+#45 0x00007f09f6897527 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Frontend/CompilerInstance.cpp:1045:42
+#46 0x00007f09fae81fe6 clang::ExecuteCompilerInvocation(clang::CompilerInstance*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/FrontendTool/ExecuteCompilerInvocation.cpp:265:32
+#47 0x0000564f82139142 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/cc1_main.cpp:251:40
+#48 0x0000564f82135281 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/driver.cpp:319:20
+#49 0x0000564f82135dea clang_main(int, char**) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/driver.cpp:395:26
+#50 0x00007f09f34366c1 (/usr/lib/libc.so.6+0x276c1)
+#51 0x00007f09f34367f9 __libc_start_main (/usr/lib/libc.so.6+0x277f9)
+#52 0x0000564f82130935 _start (/home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin/clang-16+0xd935)
+ndAction.cpp:1055:21
+#43 0x00007f09f6897527 llvm::Error::getPtr() const /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Error.h:271:51
+#44 0x00007f09f6897527 llvm::Error::operator bool() /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/llvm/include/llvm/Support/Error.h:234:22
+#45 0x00007f09f6897527 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/Frontend/CompilerInstance.cpp:1045:42
+#46 0x00007f09fae81fe6 clang::ExecuteCompilerInvocation(clang::CompilerInstance*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/lib/FrontendTool/ExecuteCompilerInvocation.cpp:265:32
+#47 0x0000564f82139142 cc1_main(llvm::ArrayRef<char const*>, char const*, void*) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/cc1_main.cpp:251:40
+#48 0x0000564f82135281 ExecuteCC1Tool(llvm::SmallVectorImpl<char const*>&) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/driver.cpp:319:20
+#49 0x0000564f82135dea clang_main(int, char**) /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/llvm/clang/tools/driver/driver.cpp:395:26
+#50 0x00007f09f34366c1 (/usr/lib/libc.so.6+0x276c1)
+#51 0x00007f09f34367f9 __libc_start_main (/usr/lib/libc.so.6+0x277f9)
+#52 0x0000564f82130935 _start (/home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin/clang-16+0xd935)
+clang-16: error: unable to execute command: Aborted (core dumped)
+clang-16: error: clang frontend command failed due to signal (use -v to see invocation)
+clang version 16.0.0 (https://github.com/THU-DSP-LAB/llvm-project.git 9e00e24e163b41513cc2118e3888d9f87b7715b0)
+Target: riscv32
+Thread model: posix
+InstalledDir: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin
+clang-16: error: unable to execute command: Aborted (core dumped)
+clang-16: error: clang frontend command failed due to signal (use -v to see invocation)
+clang version 16.0.0 (https://github.com/THU-DSP-LAB/llvm-project.git 9e00e24e163b41513cc2118e3888d9f87b7715b0)
+Target: riscv32
+Thread model: posix
+InstalledDir: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/install/bin
+clang-16: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+Preprocessed source(s) and associated run script(s) are located at:
+clang-16: note: diagnostic msg: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16/.tmp/object0-c24f17.cl
+clang-16: note: diagnostic msg: 
+********************
+
+PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+Preprocessed source(s) and associated run script(s) are located at:
+clang-16: note: diagnostic msg: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16/.tmp/object0-c24f17.cl
+clang-16: note: diagnostic msg: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16/.tmp/object0-c24f17.sh
+clang-16: note: diagnostic msg: 
+
+********************
+clang-16: note: diagnostic msg: /home/whywhy/cs/gpgpu-ai-accelerator/experiments/ventus-env-experiments/benchmarks/workloads/gelu_mlp_fp16/.tmp/object0-c24f17.sh
+clang-16: note: diagnostic msg: 
+
+********************
+nm: 'object0.riscv': No such file
+nm: 'object0.riscv': No such file
+llvm-objdump: error: 'object0.riscv': No such file or directory
+llvm-objdump: error: 'object0.riscv': No such file or directory
+sm   0 warp 0 init thread mask 0x0000000000000000ffffffff
+sm   0 warp 0 init thread mask 0x0000000000000000ffffffff
+[L1C] #     65 SM 0 CACHE 0 ADDR 80000000
+[L1C] #     65 SM 0 CACHE 0 ADDR 80000000
+[L1C] #     81 SM 0 CACHE 0 ADDR 80000000
+[L1C] #     81 SM 0 CACHE 0 ADDR 80000000
+make: *** [Makefile:5: run] Error 1
+make: *** [Makefile:5: run] Error 1

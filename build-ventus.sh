@@ -2,19 +2,19 @@
 
 set -euo pipefail
 
-DIR=$(cd "$(dirname "${0}")" &> /dev/null && (pwd -W 2> /dev/null || pwd))
+DIR=$(cd "$(dirname "${0}")" &>/dev/null && (pwd -W 2>/dev/null || pwd))
 VENTUS_INSTALL_PREFIX=${VENTUS_INSTALL_PREFIX:-${DIR}/install}
 PROGRAMS_TOBUILD_DEFAULT=(systemc llvm ocl-icd libclc spike gvm driver pocl rodinia cts test-pocl)
 PROGRAMS_TOBUILD_DEFAULT_FULL=(systemc llvm ocl-icd libclc spike rtlsim cyclesim gvm driver pocl rodinia cts test-pocl)
 PROGRAMS_TOBUILD=(${PROGRAMS_TOBUILD_DEFAULT_FULL[@]})
 
-BUILD_PARALLEL=$(( $(nproc) * 2 / 3 ))
+BUILD_PARALLEL=$(nproc)
 
 # Helper function
 help() {
   cat <<END
 
-Build [systemc llvm, pocl, ocl-icd, libclc, driver, spike, rtlsim|gpgpu, cyclesim|simulator, gvm] programs.
+Build [systemc llvm, pocl, ocl-icd, libclc, driver, spike, rtlsim|gpgpu, cyclesim|simulator, gvm, pytorch, ventus-kernels] programs.
 Run the rodinia and test-pocl test suites.
 Read ${DIR}/llvm/README.md to get started.
 
@@ -25,10 +25,17 @@ Usage: ${DIR}/$(basename ${0})
 Options:
   --build <build programs>
     Chosen programs to build : [${PROGRAMS_TOBUILD}]
-    Option format : "llvm;pocl", string are separated by semicolon.
+    Option format : "llvm;pocl" or "driver;pytorch", strings are separated by semicolon.
     ( Note that quotation marks are necessary, or bash will parse the semicolon as command ending )
     Default : "llvm;ocl-icd;libclc;spike;rtlsim;cyclesim;driver;pocl;rodinia;test-pocl"
-    'BUILD_TYPE' is default 'Release' which can be changed by enviroment variable
+    Extra target : "pytorch" builds ventus-pytorch into ${VENTUS_PYTORCH_DIR}/.venv
+    Extra target : "ventus-kernels" stages kernel artifacts for the configured backends/profiles
+    'BUILD_TYPE' defaults to 'Release' and may be overridden by environment variables
+    'LLVM_ENABLE_ASSERTIONS' defaults to 'OFF' and is forwarded to LLVM CMake
+    'LLVM_ENABLE_EXPENSIVE_CHECKS' defaults to 'OFF' and is forwarded to LLVM CMake
+    'CLANG_TOOLING_BUILD_AST_INTROSPECTION' defaults to 'OFF' and skips ASTNodeAPI tooling generation
+    'VENTUS_BUILD_KERNELS=0' opts out of the default kernel artifact stage in the pytorch build path
+    'VENTUS_KERNEL_BACKENDS' defaults to 'rtlsim spike' for kernel artifact staging
 
   --help | -h
     Print this help message and exit.
@@ -58,11 +65,11 @@ while [ $# -gt 0 ]; do
 
   --build)
     shift
-    if [ ! -z "${1}" ];then
+    if [ ! -z "${1}" ]; then
       PROGRAMS_TOBUILD=(${1//;/ })
     fi
     ;;
-  
+
   # --build-full)
   #   PROGRAMS_TOBUILD=(${PROGRAMS_TOBUILD_DEFAULT_FULL[@]})
   #   ;;
@@ -78,6 +85,9 @@ done
 
 # Get build type from env, otherwise use default value 'Release'
 BUILD_TYPE=${BUILD_TYPE:-Release}
+LLVM_ENABLE_ASSERTIONS=${LLVM_ENABLE_ASSERTIONS:-OFF}
+LLVM_ENABLE_EXPENSIVE_CHECKS=${LLVM_ENABLE_EXPENSIVE_CHECKS:-OFF}
+CLANG_TOOLING_BUILD_AST_INTROSPECTION=${CLANG_TOOLING_BUILD_AST_INTROSPECTION:-OFF}
 
 # Need to get the systemc folder from enviroment variables
 SYSTEMC_DIR=${SYSTEMC_DIR:-${DIR}/systemc}
@@ -129,6 +139,24 @@ OPENCL_CTS_BUILD_DIR=${OPENCL_CTS_DIR}/build
 RODINIA_DIR=${RODINIA_DIR:-${DIR}/rodinia}
 check_if_program_exits ${RODINIA_DIR} "gpu-rodinia"
 
+# Need to get the ventus-pytorch folder from environment variables
+VENTUS_PYTORCH_DIR=${VENTUS_PYTORCH_DIR:-${DIR}/ventus-pytorch}
+check_if_program_exits ${VENTUS_PYTORCH_DIR} "ventus-pytorch"
+VENTUS_PYTORCH_VENV=${VENTUS_PYTORCH_VENV:-${VENTUS_PYTORCH_DIR}/.venv}
+USE_CUDA=${USE_CUDA:-0}
+USE_ROCM=${USE_ROCM:-0}
+USE_XPU=${USE_XPU:-0}
+VENTUS_BACKEND=${VENTUS_BACKEND:-rtlsim}
+NUM_WARP=${NUM_WARP:-2}
+NUM_THREAD=${NUM_THREAD:-32}
+VENTUS_BUILD_KERNELS=${VENTUS_BUILD_KERNELS:-1}
+VENTUS_KERNEL_BACKENDS=${VENTUS_KERNEL_BACKENDS:-rtlsim spike}
+if [[ -z "${VENTUS_KERNEL_PROFILE:-}" && -n "${NUM_WARP:-}" && -n "${NUM_THREAD:-}" ]]; then
+  VENTUS_KERNEL_PROFILE="${NUM_WARP}w${NUM_THREAD}t"
+fi
+VENTUS_KERNEL_PROFILE=${VENTUS_KERNEL_PROFILE:-}
+VENTUS_KERNEL_BUILD_STRICT=${VENTUS_KERNEL_BUILD_STRICT:-0}
+
 # Build library systemc: depended by cyclesim
 build_systemc() {
   cd ${SYSTEMC_DIR}
@@ -155,6 +183,9 @@ build_llvm() {
     -DLLVM_OPTIMIZED_TABLEGEN=ON \
     -DLLVM_PARALLEL_LINK_JOBS=12 \
     -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+    -DLLVM_ENABLE_ASSERTIONS=${LLVM_ENABLE_ASSERTIONS} \
+    -DLLVM_ENABLE_EXPENSIVE_CHECKS=${LLVM_ENABLE_EXPENSIVE_CHECKS} \
+    -DCLANG_TOOLING_BUILD_AST_INTROSPECTION=${CLANG_TOOLING_BUILD_AST_INTROSPECTION} \
     -DLLVM_ENABLE_PROJECTS="clang;lld;libclc" \
     -DLLVM_TARGETS_TO_BUILD="AMDGPU;X86;RISCV" \
     -DLLVM_TARGET_ARCH=riscv32 \
@@ -177,11 +208,12 @@ build_driver() {
     -DDRIVER_ENABLE_AUTOSELECT=ON \
     -DDRIVER_ENABLE_RTLSIM=ON \
     -DDRIVER_ENABLE_CYCLESIM=ON \
-    -DDRIVER_ENABLE_GVM=ON \
-    # -DCMAKE_C_COMPILER=clang \
-    # -DCMAKE_CXX_COMPILER=clang++ \
+    -DDRIVER_ENABLE_GVM=ON
+
   ninja -C ${DRIVER_BUILD_DIR}
-  ninja -C ${DRIVER_BUILD_DIR} install
+
+  ninja -C ${DRIVER_BUILD_DIR} install # -DCMAKE_C_COMPILER=clang
+  # -DCMAKE_CXX_COMPILER=clang++
 }
 
 # Build spike simulator
@@ -207,7 +239,7 @@ build_gpgpu_cyclesim() {
 
 # Build ventus cpp cycle-level simulator
 build_gpgpu_rtlsim() {
-  cd ${GPGPU_DIR}/sim-verilator-nocache
+  cd ${GPGPU_DIR}/sim-verilator
   make -j${BUILD_PARALLEL} RELEASE=1
   make install RELEASE=1 PREFIX=${VENTUS_INSTALL_PREFIX}
 }
@@ -220,9 +252,18 @@ build_gvm() {
 
 # Build pocl from THU
 build_pocl() {
+  local pocl_c_flags=""
+  local pocl_cxx_flags=""
+
+  if [[ "${LLVM_ENABLE_ASSERTIONS}" == "ON" || "${LLVM_ENABLE_EXPENSIVE_CHECKS}" == "ON" ]]; then
+    pocl_c_flags="${pocl_c_flags} -D_DEBUG -UNDEBUG"
+    pocl_cxx_flags="${pocl_cxx_flags} -D_DEBUG -D_GLIBCXX_DEBUG -UNDEBUG"
+  fi
+
   mkdir -p ${POCL_BUILD_DIR}
   cd ${POCL_DIR}
   cmake -G Ninja -B ${POCL_BUILD_DIR} -S ${POCL_DIR} \
+    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
     -DENABLE_HOST_CPU_DEVICES=OFF \
     -DENABLE_VENTUS=ON \
     -DENABLE_ICD=ON \
@@ -231,11 +272,88 @@ build_pocl() {
     -DSTATIC_LLVM=OFF \
     -DVENTUS_INSTALL_PREFIX=${VENTUS_INSTALL_PREFIX} \
     -DCMAKE_INSTALL_PREFIX=${VENTUS_INSTALL_PREFIX} \
+    -DCMAKE_C_FLAGS="${pocl_c_flags}" \
+    -DCMAKE_CXX_FLAGS="${pocl_cxx_flags}" \
     -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
-    # -DCMAKE_C_COMPILER=clang \
-    # -DCMAKE_CXX_COMPILER=clang++ \
+  # -DCMAKE_C_COMPILER=clang \
+  # -DCMAKE_CXX_COMPILER=clang++ \
   ninja -C ${POCL_BUILD_DIR}
   ninja -C ${POCL_BUILD_DIR} install
+}
+
+build_ventus_kernel_artifacts() {
+  check_if_ventus_llvm_built
+  local kernels_root="${VENTUS_PYTORCH_DIR}/aten/src/ATen/ventus/kernels"
+  local builders_root="${kernels_root}/builders"
+  local -a helpers=()
+  local -a backends=()
+  local helper backend
+  local normalized_backends="${VENTUS_KERNEL_BACKENDS//,/ }"
+  normalized_backends="${normalized_backends//;/ }"
+  # shellcheck disable=SC2206
+  backends=(${normalized_backends})
+
+  while IFS= read -r helper; do
+    helpers+=("${helper}")
+  done < <(find "${builders_root}" -maxdepth 1 -type f -name 'build-*-artifact.sh' | sort)
+
+  if [[ ${#helpers[@]} -eq 0 ]]; then
+    echo "No Ventus kernel artifact helper scripts were found under ${builders_root}"
+    exit 1
+  fi
+  if [[ ${#backends[@]} -eq 0 ]]; then
+    echo "VENTUS_KERNEL_BACKENDS resolved to an empty backend list"
+    exit 1
+  fi
+
+  for helper in "${helpers[@]}"; do
+    if [[ ! -x "${helper}" ]]; then
+      chmod +x "${helper}"
+    fi
+    for backend in "${backends[@]}"; do
+      env \
+        VENTUS_INSTALL_PREFIX="${VENTUS_INSTALL_PREFIX}" \
+        VENTUS_PYTORCH_DIR="${VENTUS_PYTORCH_DIR}" \
+        LLVM_DIR="${LLVM_DIR}" \
+        VENTUS_BACKEND="${backend}" \
+        NUM_WARP="${NUM_WARP:-}" \
+        NUM_THREAD="${NUM_THREAD:-}" \
+        VENTUS_KERNEL_PROFILE="${VENTUS_KERNEL_PROFILE:-}" \
+        VENTUS_KERNEL_BUILD_STRICT="${VENTUS_KERNEL_BUILD_STRICT}" \
+        "${helper}"
+    done
+  done
+}
+
+# Build ventus-pytorch in a dedicated virtual environment
+build_ventus_pytorch() {
+  check_if_spike_built
+  check_if_cyclesim_built
+  check_if_rtlsim_built
+  check_if_gvm_built
+  check_if_gvmref_built
+  check_if_pocl_built
+  if [[ "${VENTUS_BUILD_KERNELS}" == "1" ]]; then
+    build_ventus_kernel_artifacts
+  fi
+  cd ${VENTUS_PYTORCH_DIR}
+  if [ ! -d "${VENTUS_PYTORCH_VENV}" ]; then
+    python3 -m venv --system-site-packages "${VENTUS_PYTORCH_VENV}"
+  else
+    python3 -m venv --upgrade --system-site-packages "${VENTUS_PYTORCH_VENV}"
+  fi
+  # shellcheck disable=SC1090
+  source "${VENTUS_PYTORCH_VENV}/bin/activate"
+  python - <<'PYCODE'
+import setuptools.build_meta
+print('setuptools.build_meta available')
+PYCODE
+  pip install -r requirements-build.txt
+  USE_CUDA=${USE_CUDA:-0} \
+    USE_ROCM=${USE_ROCM:-0} \
+    USE_XPU=${USE_XPU:-0} \
+    MAX_JOBS=${MAX_JOBS:-${BUILD_PARALLEL}} \
+    pip install -e . -v --no-build-isolation
 }
 
 # Build libclc for pocl
@@ -256,13 +374,13 @@ build_libclc() {
     -DCMAKE_CLC_COMPILER_WORKS=ON \
     -DCMAKE_CLC_COMPILER_FORCED=ON \
     -DCMAKE_LLAsm_FLAGS="-target riscv32 -mcpu=ventus-gpgpu -cl-std=CL2.0 -Dcl_khr_fp64 -ffunction-sections -fdata-sections" \
-    -DCMAKE_CLC_FLAGS="-target riscv32 -mcpu=ventus-gpgpu -cl-std=CL2.0 -I${LLVM_DIR}/libclc/generic/include -Dcl_khr_fp64  -ffunction-sections -fdata-sections"\
+    -DCMAKE_CLC_FLAGS="-target riscv32 -mcpu=ventus-gpgpu -cl-std=CL2.0 -I${LLVM_DIR}/libclc/generic/include -Dcl_khr_fp64  -ffunction-sections -fdata-sections" \
     -DLIBCLC_TARGETS_TO_BUILD="riscv32--" \
     -DCMAKE_CXX_FLAGS="-I ${LLVM_DIR}/llvm/include/ -std=c++17 -Dcl_khr_fp64 -ffunction-sections -fdata-sections" \
     -DCMAKE_INSTALL_PREFIX=${VENTUS_INSTALL_PREFIX} \
     -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
-    # -DCMAKE_C_COMPILER=clang \
-    # -DCMAKE_CXX_COMPILER=clang++ \
+  # -DCMAKE_C_COMPILER=clang \
+  # -DCMAKE_CXX_COMPILER=clang++ \
   ninja
   ninja install
   # TODO: There are bugs in linking all libclc object files now
@@ -286,29 +404,29 @@ build_icd_loader() {
 }
 
 build_opencl_cts() {
-    cd ${OPENCL_CTS_DIR}
-    cmake -S ${OPENCL_CTS_DIR} -B ${OPENCL_CTS_BUILD_DIR} -G Ninja \
-        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DCL_INCLUDE_DIR=${VENTUS_INSTALL_PREFIX}/include \
-        -DCL_LIB_DIR=${VENTUS_INSTALL_PREFIX}/lib \
-        -DOPENCL_LIBRARIES=OpenCL
-    cmake --build ${OPENCL_CTS_BUILD_DIR} -j ${BUILD_PARALLEL}
+  cd ${OPENCL_CTS_DIR}
+  cmake -S ${OPENCL_CTS_DIR} -B ${OPENCL_CTS_BUILD_DIR} -G Ninja \
+    -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
+    -DCL_INCLUDE_DIR=${VENTUS_INSTALL_PREFIX}/include \
+    -DCL_LIB_DIR=${VENTUS_INSTALL_PREFIX}/lib \
+    -DOPENCL_LIBRARIES=OpenCL
+  cmake --build ${OPENCL_CTS_BUILD_DIR} -j ${BUILD_PARALLEL}
 }
 
 # Test the rodinia test suit
 test_rodinia() {
-   cd ${RODINIA_DIR}
-   make OCL_clean
-   make OPENCL
+  cd ${RODINIA_DIR}
+  make OCL_clean
+  make OPENCL
 }
 
 # TODO : More test cases of the pocl will be added
 test_pocl() {
-   cd ${POCL_BUILD_DIR}/examples
-   ./vecadd/vecadd
-   ./matadd/matadd
-   VENTUS_BACKEND=cyclesim ./matadd/matadd
-   VENTUS_BACKEND=rtlsim ./matadd/matadd
+  cd ${POCL_BUILD_DIR}/examples
+  ./vecadd/vecadd
+  ./matadd/matadd
+  VENTUS_BACKEND=cyclesim ./matadd/matadd
+  VENTUS_BACKEND=rtlsim ./matadd/matadd
 }
 
 # Export needed path and enviroment variables
@@ -323,13 +441,13 @@ export_elements() {
 }
 
 # When no need to build llvm, export needed elements
-if [[ ! "${PROGRAMS_TOBUILD[*]}" =~ "llvm" ]];then
+if [[ ! "${PROGRAMS_TOBUILD[*]}" =~ "llvm" ]]; then
   export_elements
 fi
 
 # Check dep-library systemc is built or not
 check_if_systemc_built() {
-  if [ ! -f "${SYSTEMC_INSTALL_DIR}/lib-linux64/libsystemc.so" ];then
+  if [ ! -f "${SYSTEMC_INSTALL_DIR}/lib-linux64/libsystemc.so" ]; then
     echo "Please build library systemc first!"
     exit 1
   fi
@@ -337,7 +455,7 @@ check_if_systemc_built() {
 
 # Check llvm is built or not
 check_if_ventus_llvm_built() {
-  if [ ! -d "${VENTUS_INSTALL_PREFIX}" ];then
+  if [ ! -d "${VENTUS_INSTALL_PREFIX}" ]; then
     echo "Please build llvm first!"
     exit 1
   fi
@@ -345,8 +463,8 @@ check_if_ventus_llvm_built() {
 
 # Check isa simulator is built or not
 check_if_spike_built() {
-  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libspike_main.so" ];then
-    if [ ! -f "${SPIKE_BUILD_DIR}/lib/libspike_main.so" ];then
+  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libspike_main.so" ]; then
+    if [ ! -f "${SPIKE_BUILD_DIR}/lib/libspike_main.so" ]; then
       echo "Please build spike isa-simulator first!"
       exit 1
     else
@@ -370,7 +488,7 @@ check_if_gvmref_built() {
 
 # Check gpgpu rtlsim sim-verilator is built or not
 check_if_rtlsim_built() {
-  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libVentusRTL.so" ];then
+  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libVentusRTL.so" ]; then
     echo "Please build Ventus Chisel RTL sim-verilator (rtlsim) first!"
     exit 1
   fi
@@ -385,7 +503,7 @@ check_if_gvm_built() {
 
 # Check gpgpu cpp cycle-level simulator is built or not
 check_if_cyclesim_built() {
-  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libVentusCycleSim.so" ];then
+  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libVentusCycleSim.so" ]; then
     echo "Please build Ventus Chisel C++ cycle-level simulator (cyclesim) first!"
     exit 1
   fi
@@ -394,30 +512,29 @@ check_if_cyclesim_built() {
 # Check ocl-icd loader is built or not
 # since pocl need ocl-icd and llvm built first
 check_if_ocl_icd_built() {
-  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libOpenCL.so" ];then
+  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/libOpenCL.so" ]; then
     echo "Please build ocl-icd first!"
     exit 1
   fi
 }
 
 check_if_pocl_built() {
-  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/pocl/libpocl-devices-ventus.so" ];then
+  if [ ! -f "${VENTUS_INSTALL_PREFIX}/lib/pocl/libpocl-devices-ventus.so" ]; then
     echo "Please build POCL first!"
     exit 1
   fi
 }
 
 # Process build options
-for program in "${PROGRAMS_TOBUILD[@]}"
-do
-  if [ "${program}" == "systemc" ];then
+for program in "${PROGRAMS_TOBUILD[@]}"; do
+  if [ "${program}" == "systemc" ]; then
     build_systemc
-  elif [ "${program}" == "llvm" ];then
+  elif [ "${program}" == "llvm" ]; then
     build_llvm
     export_elements
-  elif [ "${program}" == "ocl-icd" ];then
+  elif [ "${program}" == "ocl-icd" ]; then
     build_icd_loader
-  elif [ "${program}" == "libclc" ];then
+  elif [ "${program}" == "libclc" ]; then
     check_if_ventus_llvm_built
     build_libclc
   elif [ "${program}" == "spike" ]; then
@@ -449,6 +566,10 @@ do
     check_if_pocl_built
     check_if_spike_built
     build_opencl_cts
+  elif [ "${program}" == "pytorch" ]; then
+    build_ventus_pytorch
+  elif [ "${program}" == "ventus-kernels" ]; then
+    build_ventus_kernel_artifacts
   elif [ "${program}" == "test-pocl" ]; then
     check_if_ventus_llvm_built
     check_if_ocl_icd_built
