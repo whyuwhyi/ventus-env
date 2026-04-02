@@ -14,7 +14,7 @@ export POCL_ENABLE_UNINIT=1
 # remove extra colons
 export LD_LIBRARY_PATH=$(echo "$LD_LIBRARY_PATH" | sed -e 's/^:*//' -e 's/:*$//')
 
-export NUM_WARP=2
+export NUM_WARP=8
 export NUM_THREAD=32
 export VENTUS_BACKEND=${VENTUS_BACKEND:-rtlsim}
 export LUT_PATH=${LUT_PATH:-${DIR}/spike/dependencies/unfu/lut}

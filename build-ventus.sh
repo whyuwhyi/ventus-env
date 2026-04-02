@@ -29,13 +29,14 @@ Options:
     ( Note that quotation marks are necessary, or bash will parse the semicolon as command ending )
     Default : "llvm;ocl-icd;libclc;spike;rtlsim;cyclesim;driver;pocl;rodinia;test-pocl"
     Extra target : "pytorch" builds ventus-pytorch into ${VENTUS_PYTORCH_DIR}/.venv
-    Extra target : "ventus-kernels" stages kernel artifacts for the configured backends/profiles
+    Extra target : "ventus-kernels" stages flat kernel artifacts under torch/share/ventus/kernels/<op>/
     'BUILD_TYPE' defaults to 'Release' and may be overridden by environment variables
     'LLVM_ENABLE_ASSERTIONS' defaults to 'OFF' and is forwarded to LLVM CMake
     'LLVM_ENABLE_EXPENSIVE_CHECKS' defaults to 'OFF' and is forwarded to LLVM CMake
     'CLANG_TOOLING_BUILD_AST_INTROSPECTION' defaults to 'OFF' and skips ASTNodeAPI tooling generation
     'VENTUS_BUILD_KERNELS=0' opts out of the default kernel artifact stage in the pytorch build path
-    'VENTUS_KERNEL_BACKENDS' defaults to 'rtlsim spike' for kernel artifact staging
+    'VENTUS_KERNEL_OPS' may be set to a comma/semicolon separated subset when staging flat kernel artifacts
+    'VENTUS_KERNEL_FORCE_REBUILD=1' forces rebuilding kernel artifacts even when flat artifacts already exist
 
   --help | -h
     Print this help message and exit.
@@ -147,15 +148,9 @@ USE_CUDA=${USE_CUDA:-0}
 USE_ROCM=${USE_ROCM:-0}
 USE_XPU=${USE_XPU:-0}
 VENTUS_BACKEND=${VENTUS_BACKEND:-rtlsim}
-NUM_WARP=${NUM_WARP:-2}
-NUM_THREAD=${NUM_THREAD:-32}
 VENTUS_BUILD_KERNELS=${VENTUS_BUILD_KERNELS:-1}
-VENTUS_KERNEL_BACKENDS=${VENTUS_KERNEL_BACKENDS:-rtlsim spike}
-if [[ -z "${VENTUS_KERNEL_PROFILE:-}" && -n "${NUM_WARP:-}" && -n "${NUM_THREAD:-}" ]]; then
-  VENTUS_KERNEL_PROFILE="${NUM_WARP}w${NUM_THREAD}t"
-fi
-VENTUS_KERNEL_PROFILE=${VENTUS_KERNEL_PROFILE:-}
 VENTUS_KERNEL_BUILD_STRICT=${VENTUS_KERNEL_BUILD_STRICT:-0}
+VENTUS_KERNEL_FORCE_REBUILD=${VENTUS_KERNEL_FORCE_REBUILD:-0}
 
 # Build library systemc: depended by cyclesim
 build_systemc() {
@@ -285,43 +280,62 @@ build_ventus_kernel_artifacts() {
   check_if_ventus_llvm_built
   local kernels_root="${VENTUS_PYTORCH_DIR}/aten/src/ATen/ventus/kernels"
   local builders_root="${kernels_root}/builders"
-  local -a helpers=()
-  local -a backends=()
-  local helper backend
-  local normalized_backends="${VENTUS_KERNEL_BACKENDS//,/ }"
-  normalized_backends="${normalized_backends//;/ }"
-  # shellcheck disable=SC2206
-  backends=(${normalized_backends})
+  local flat_builder="${builders_root}/build-kernel-flat.sh"
+  local install_root="${VENTUS_KERNEL_INSTALL_DIR:-${VENTUS_PYTORCH_DIR}/torch/share/ventus/kernels}"
+  local -a kernel_ops=()
+  local normalized_kernel_ops="${VENTUS_KERNEL_OPS:-}"
+  normalized_kernel_ops="${normalized_kernel_ops//,/ }"
+  normalized_kernel_ops="${normalized_kernel_ops//;/ }"
+  if [[ -n "${normalized_kernel_ops}" ]]; then
+    # shellcheck disable=SC2206
+    kernel_ops=(${normalized_kernel_ops})
+  else
+    kernel_ops=(
+      vecadd mul sub div relu tanh neg
+      eq_scalar ne_scalar ne_tensor lt_scalar lt_scalar_f32 rsub_scalar
+      bitwise_and_bool bitwise_and_i64_bool bitwise_not_bool bitwise_or_bool
+      masked_fill_i64_bool pow_scalar_f32 addcmul_f32 tril_f32 where_f32
+      arange_f32 arange_i64 isin_i64 isneginf_f32 rsqrt_f32
+      add_i64 sub_i64 mul_i64 all_bool any_bool
+      gelu_f32 gelu_f16 gelu_bf16 silu_f32 silu_f16 silu_bf16
+      convert_f32_f16 convert_f16_f32 convert_f32_bf16 convert_bf16_f32
+      vecadd_f16 vecadd_bf16 vecmul_f16 vecmul_bf16
+      vecsub_f16 vecsub_bf16 vecneg_f16 vecneg_bf16
+      vecdiv_f16 vecdiv_bf16
+      sum mean cumsum max_i64 argmax_f32
+      softmax_f32 softmax_f16 softmax_bf16
+      layer_norm_f32 layer_norm_f16
+      index_select_f32 addmm addmm_mma addmm_mma_bf16 gemm_tf32
+    )
+  fi
 
-  while IFS= read -r helper; do
-    helpers+=("${helper}")
-  done < <(find "${builders_root}" -maxdepth 1 -type f -name 'build-*-artifact.sh' | sort)
-
-  if [[ ${#helpers[@]} -eq 0 ]]; then
-    echo "No Ventus kernel artifact helper scripts were found under ${builders_root}"
+  if [[ ! -x "${flat_builder}" ]]; then
+    chmod +x "${flat_builder}" 2>/dev/null || true
+  fi
+  if [[ ! -x "${flat_builder}" ]]; then
+    echo "Flat kernel builder script is missing: ${flat_builder}"
     exit 1
   fi
-  if [[ ${#backends[@]} -eq 0 ]]; then
-    echo "VENTUS_KERNEL_BACKENDS resolved to an empty backend list"
-    exit 1
-  fi
 
-  for helper in "${helpers[@]}"; do
-    if [[ ! -x "${helper}" ]]; then
-      chmod +x "${helper}"
+  local op
+  for op in "${kernel_ops[@]}"; do
+    local op_install_dir="${install_root}/${op}"
+    if [[ "${VENTUS_KERNEL_FORCE_REBUILD}" != "1" ]] \
+      && [[ -f "${op_install_dir}/object.riscv" ]] \
+      && compgen -G "${op_install_dir}/*.metadata" > /dev/null \
+      && compgen -G "${op_install_dir}/*.data" > /dev/null; then
+      echo "[ventus-kernels] skip op=${op} install=${op_install_dir}"
+      continue
     fi
-    for backend in "${backends[@]}"; do
-      env \
-        VENTUS_INSTALL_PREFIX="${VENTUS_INSTALL_PREFIX}" \
-        VENTUS_PYTORCH_DIR="${VENTUS_PYTORCH_DIR}" \
-        LLVM_DIR="${LLVM_DIR}" \
-        VENTUS_BACKEND="${backend}" \
-        NUM_WARP="${NUM_WARP:-}" \
-        NUM_THREAD="${NUM_THREAD:-}" \
-        VENTUS_KERNEL_PROFILE="${VENTUS_KERNEL_PROFILE:-}" \
-        VENTUS_KERNEL_BUILD_STRICT="${VENTUS_KERNEL_BUILD_STRICT}" \
-        "${helper}"
-    done
+    env \
+      VENTUS_INSTALL_PREFIX="${VENTUS_INSTALL_PREFIX}" \
+      VENTUS_PYTORCH_DIR="${VENTUS_PYTORCH_DIR}" \
+      LLVM_DIR="${LLVM_DIR}" \
+      VENTUS_KERNEL_BUILD_STRICT="${VENTUS_KERNEL_BUILD_STRICT}" \
+      VENTUS_KERNEL_COMPILE_OBJECT="${VENTUS_KERNEL_COMPILE_OBJECT:-1}" \
+      VENTUS_KERNEL_INSTALL_DIR="${VENTUS_KERNEL_INSTALL_DIR:-${VENTUS_PYTORCH_DIR}/torch/share/ventus/kernels}" \
+      VENTUS_KERNEL_BUILD_DIR="${VENTUS_KERNEL_BUILD_DIR:-${VENTUS_PYTORCH_DIR}/build/ventus-kernels}" \
+      "${flat_builder}" "${op}"
   done
 }
 
